@@ -1,0 +1,91 @@
+Input format was DaliLite
+Length of gapped reference: 799
+There will be this many segments: 8
+The reference structure was:  RestonEbolavirus_glycoprotein
+The reference fasta was:  Reston_GP_NP690583
+The compared structures were:
+  Bundibugyo
+  Sudan
+  TaiForest
+  Zaire
+There are this many segment sets: 32
+MGSGYQLLQ-LPRERFRKTSFLVWVIILFQRAISMPLGIVTNSTLK-ATEID-QLVCRDKLSSTSQLKSVGLNLEGNGIATDVPSATKRWGFRSGVPPKV Reston_GP_NP690583
+       || ||||||||||| |||||||      ||| | | ||           |||||||||||||||||||||| ||||| |||||||| ||||||
+.MVTSGILQ-LPRERFRKTSFFVWVIILFHKVFPIPLGVVHNNTLQvSDIDK-LV.CRDKLSSTSQLKSVGLNLEGNGVATDVPTATKRWGFRAGVPPKV Bundibugyo
+   |  ||| |||  ||| || |||||||| | ||||| ||||||   |||| |||| | | || ||||||||||| |  || |||||||||||||||||
+.MGGLSLLQ-LPRDKFRKSSFFVWVIILFQKAFSMPLGVVTNSTLE-VTEID-QLVCKDHLASTDQLKSVGLNLEGSGVSTDIPSATKRWGFRSGVPPKV Sudan
+   |      ||||||||||| |||||||    | ||| | | ||          ||||||||||||||||||||||| ||||| |||||||| ||||||
+..MGASGILqLPRERFRKTSFFVWVIILFHKVFSIPLGVVHNNTLQ-.VSDIdKFVCRDKLSSTSQLKSVGLNLEGNGVATDVPTATKRWGFRAGVPPKV TaiForest
+       || ||| ||  |||  ||||||||  | |||   ||||                                                       
+.MGVTGILQ-LPRDRFKRTSFFLWVIILFQRTFSIPLGVIHNSTL.-QVSD.-................vdkLVCRDKLSSTNQL....RSVGLNLEGN. Zaire
+
+VSYEAGEWAENCYNLEIKKSDGSECLPLPPDGVRGFPRCRYVHKVQGTGPCPG-----DLAFHKNGAFFLYDRLASTVIYRGTTFAEGVVAFLILSEPKK Reston_GP_NP690583
+| ||||||||||||| ||| |                                                                               
+VNYEAGEWAENCYNLDIKKAD.........gseclpeapegvrgfprcryvhk-----vsgtgpcpegyafhkegafflydrlastiiyrsttfsegvva Bundibugyo
+||||||||||||||||||| ||||||| |||||||||||||||| ||||||||     | |||| |||||||||||||||||  |||||||||||  || 
+VSYEAGEWAENCYNLEIKKPDGSECLPPPPDGVRGFPRCRYVHKAQGTGPCPG-----DYAFHKDGAFFLYDRLASTVIYRGVNFAEGVIAFLILAKPKE Sudan
+|  |||||||||||| ||| |                                                                               
+VNCEAGEWAENCYNLAIKKVD.........gseclpeapegvrdfprcryvhk-----vsgtgpcpgglafhkegafflydrlastiiyrgttfaegvia TaiForest
+    |                                      |  |   |                                           |     
+..GVATDVPSATKRWGFRSGVPPKVVNYEAGEWAENCYNLEIKKPDGS.ECLPaapdgirgfprcrYVHKVSGTGPCAGDFAFHKEGAFFLYDRLASTVI Zaire
+
+--H-FWKATPAHEPVNTTDDSTSYYMTLTLSYEMSNFGGNESNTLFKVDNHTYVQL-DRPHTPQFLVQLNETLRRNNRLSNSTGR----L---------- Reston_GP_NP690583
+                                                                                                    
+--f-lilpetkkdffqspplhepanmttdpssyyhtvtlnyvadnfgtnmtnflfq-vdhltyvqleprftpqflvqlnetiytn----g---------- Bundibugyo
+         |  | || |    ||| |  | ||  |||   | |||| || | | |                                            
+tfL-QSP..PIREAVNYTENTSSYYATSYLEYEIENFGAQHSTTLFKIDNNTFVRLdRPHTPQFLFQLNDTIHLHQQLSNTTGRL----Iwtldaninad Sudan
+                                                                                                    
+--f-lilpkarkdffqspplhepanmttdpssyyhtttinyvvdnfgtntteflfq-vdhltyvqlearftpqflvllnetiysd----n---------- TaiForest
+                                               |                                         |          
+--YrGTTF.............AEGVVAFLILPQAKKDFFSSHPLREPVNAT.....-edpSSGYYSTTIRYQATGFGTNETEYLFevdnL---------- Zaire
+
+-TWTLDPKIEPDVGEWAFWETKKNFSQQLHGENLHF------QIPSTHTNNSSDQSPAGTVQGKISYH-PP--------------------AN--NSELV Reston_GP_NP690583
+                                |                        |                                          
+-rrsnttgtliwkvnptvdtgVGEWAFWENKKNFTK------TLS.SEELSVIFVPRAQDPGSNQKTK-VT--------------------PTsfANNQT Bundibugyo
+              |    |        |                                  | |   |                              
+igeWAFWENKKNLSEQLRGEELSFEALSLNE..TED------D..DAASSRITKGRISDRATRKYSDLvPK--------------------NS--PGMVP Sudan
+                                |                                                                   
+-rrsnttgkliwkinptvdtsMGEWAFWENKKNFTK------TLS.SEELSFVPVPETQNQVLDTTAT-VS--------------------PPisAHNHA TaiForest
+ |                       |                 |  |                  |                                  
+-TYV.QLESRFTPQFLLQLNETIYTSGKRSNTTGKLiwkvnpeIDTTIGEWAFWETKKNLTRKIRSEE-LSftvvsngaknisgqspartssD--PGTNT Zaire
+
+PTDSPPVVSVLTAGRTEE--M--STQ-----G-----LTNGETITGFTANPMTTTIAPSPTMTSEVDNNVPSEQPNNTASIEDSPP-SAS-------N-E Reston_GP_NP690583
+       |                                                      ||                    |               
+SKNHEDLVpedpasvvqv--r--dlq-----r-----entvptpppdtvpttlipDTMEEQTTSHY.EPPNISRNHQERNNTAHPE-TLAnnppdntt-P Bundibugyo
+               ||                     |    |     |        |           ||  |    | |   |              
+LHIPEGETTLPSQNSTEG--RrvGVN-----TqetitETAATIIGT...NGNH..MQISTIGIRPSSSQIPSSSPTTAPSPEAQTP-TTH-------T-S Sudan
+  |    |                                                      |         | |    |                    
+AEDHKELVsedstpvvqm--q--nik-----g-----kdtmpttvtgvptttpspFPINARNTDHTKSFIGLEGPQEDHSTTQPAKtTSQ-------PtN TaiForest
+ |                                   ||   ||        |       |    |     ||                           
+TTEDHKIMASENSSAMVQvhS--QGReaavsH-----LTTLATISTSPQSLTTKPGPDNSTHNTPVYKLDISEATQVEQHHRRTDN-DSTasdtpsaT-T Zaire
+
+TIYHSEMDPIQGSNNSAQSPQTKTTPAPTTSPMTQDPQETANSSKPGTSPGSAAGPSQPGLTINTVSKVADSLSPTRKQKRSVRQNTANKCNPDLYYWTA Reston_GP_NP690583
+                   |    |  ||          |         |                              |  |  |             
+STPPQDGERTSSHTTPSPRPVPTSTIHPTTRETHIPTTMTTSHDTDSNRPNPIDISESTEPG.PLTNTTRGAANLLTGSRRTRREITLRTQAKCNPNLHY Bundibugyo
+               |        |  |  ||       |       |       |          | |   |      ||| ||               
+G.............PSVM.ATEEPTTPPGSSPGPTTEAPTLTTPENITTAVKTVLPQESTSNGLITSTVTGILGSLGLRKRSRRQTNTKATGKCNPNLHY Sudan
+       |           |     |  | |   |            |          |                |     | |       |        
+STESTTLNPTSEPSSRGTGPSSPTVPNTTESHAELGKTTPTTLPEQHTAASAIPRAVHPDELSGPGFLTNTIRGVTNLLTGSRRKRRDVTPNTQPKCNPN TaiForest
+                           |          |||               |   |        |          |  |    |           
+AAGPPKAENT.NTSK......STDFLDPATTTSPQNHSETAGNNNTHHQDTGEESASSGKLGL.ITNTIAGVAGLITGGRRTRREAIVNAQPKCNPNLHY Zaire
+
+VDEGAAVGLAWIPYFGPAAEGIYIEGVMHNQNGLICGLRQLANETTQA----LQLFLRATTELR-------TY--SLLNRKAIDFLLQRWGGTCRILGPS Reston_GP_NP690583
+                                        |                                  | ||||||||||||||||| |||| 
+WTTQDEGAAIGLAWIPYFGPAAEGIYTEGIMHNQNGLICGLRQLANETtqalQLFLRAT...TE-------LRtfSILNRKAIDFLLQRWGGTCHILGPD Bundibugyo
+         | |        |                   |            |                                          |   
+WTAQEQHNAAGIAWIPYFGPGAEGIYTEGLMHNQNALVCGLRQLANET----TQALQ.......-------lF--LRATTELRTYTILNRKAIDFLLRRW Sudan
+     |                                         |          |                | ||||||||||||||||| |||| 
+LHYWTALDEGAAIGLAWIPYFGPAAEGIYTEGIMENQNGLICGLRQLA----.NETTQALQLFLrattelrtF--SILNRKAIDFLLQRWGGTCHILGPD TaiForest
+                                        |            |                              |           |   
+WTTQDEGAAIGLAWIPYFGPAAEGIYIEGLMHNQDGLICGLRQLANET----TQALQL......-------.F--LRATTELRTFSILNRKAIDFLLQRW Zaire
+
+CCIEPHDWTKN---------ITDEINQIKHDFIDNPLPDHGDD--LN---LWTG--WRQWIPAGIGI-IGVIIA--IIAL----------LCICKILC* Reston_GP_NP690583
+|||||||||||         ||| | || |||||        |   |         |||| ||||||  |||||   |||          ||||| | *
+CCIEPHDWTKN---------ITDKIDQIIHDFID....KPLPDqtdN---DNWWtgWRQWVPAGIGI-TGVIIA--VIAL----------LCICKFLL* Bundibugyo
+                                                        |||||||||||  | |||  ||||          || || ||*
+GGTCRILGPDCciephdwtkNITDKINQIIHDFIDNPLPN.qd--nD---DNWWtgWRQWIPAGIGI-TGIIIA--IIAL----------LCVCKLLC* Sudan
+||||| |||||         |                 |                 | || ||||||    |                          *
+CCIEPQDWTKN---------I.TDKIDQIIHDFV....DNNLP--NQndgSNWWtgWKQWVPAGIGItgvIIAIiaLLCIckfmlfqlqdgktlglki* TaiForest
+                                                        ||||||||||   |||||   |||           ||||   *
+GGTCHILGPDCciephdwtkNITDKIDQIIHDFVDKTLP.dqg--dn---DNWWtgWRQWIPAGIGV-TGVIIA--VIAL----------FCICKFVF* Zaire
+

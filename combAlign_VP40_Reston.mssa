@@ -1,0 +1,72 @@
+Input format was TM-align
+Length of gapped reference: 384
+There will be this many segments: 5
+The reference structure was:  RestonEbolavirus_VP40
+The reference fasta was:  Reston_VP40
+The compared structures were:
+  Bundibugyo
+  Sudan
+  TaiForest
+  Zaire
+  Marburg
+There are this many segment sets: 25
+mrrgv--l---p--------t--------appa--yndia---y------pms-ilp---trp-sv-iv-ne-t--k-s- Reston_VP40
+.                   .        ...           .      ..        ... .. .. .. :  : : 
+M-----------RRAILPTAP--------PEY--------IEAV------YP-----MRTVST-SI-NS-TA-S--G-PN Bundibugyo
+  : .  :   .        .               .:::   :      :.. ..:   ..: .: .. :: :  : : 
+--M-R--R---V--------T---------------VPTA---P------PAYADIG---YPMSMLPIKSSRAV--S-G- Sudan
+...        .        .        ..                   ..    :   ... .. :: :: :  : : 
+MRR-----IILP--------T--------AP-------------PEYMEAVY----P---MRT-MN-SG-ADNTASGPN- TaiForest
+ :.    .   .        .        ..    ...:.   .      ... ..    ...     . :  :  . . 
+-MR----R---V--------ILPTAPPEYME--AIYPVRS---N------STI-AR-G--GNS-----N-T--G--F-L- Zaire
+..     .   .        :        .                         ..   ... .. .: .. .  : : 
+MA---SSS---N--------Y--------N-------------------------TY---MQY-LN-PP-PY-A--D-H- Marburg
+
+-d---vl--avpgadvpsnsmrpvaddnidhsshtpsgvasafileatvnvisgtkvlmkqipiwlplgvadqkiysfds Reston_VP40
+ :   ::  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+FP---AP--DVMMSDTPSNSLRPIADDNIDHPSHTPTSVSSAFILEAMVNVISGPKVLMKQIPIWLPLGVADQKTYSFDS Bundibugyo
+ :   ::  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+-IQQKQE--VLPGMDTPSNSMRPVADDNIDHTSHTPNGVASAFILEATVNVISGPKVLMKQIPIWLPLGIADQKTYSFDS Sudan
+ :   ..  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+-YT--TT--GVMTNDTPSNSLRPVADDNIDHPSHTPNSVASAFILEAMVNVISGPKVLMKQIPIWLPLGVSDQKTYSFDS TaiForest
+ .   :.   .:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+-T---PE---SVNGDTPSNPLRPIADDTIDHASHTPGSVSSAFILEAMVNVISGPKVLMKQIPIWLPLGVADQKTYSFDS Zaire
+ :   ..  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+-G---ANQLIPADQLSNQQGITPNYVGDLNLDDQFKGNVCHAFTLEAIIDISAYNERTVKGVPAWLPLGIMSNFEYPLAH Marburg
+
+ttaaimlasytvthfgkisnplvrvnrlgpgipdhplrllrlgnqaflqefvlppvqlpqyftfdltalklitqplpaat Reston_VP40
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+TTAAIMLASYTITHFGKTSNPLVRINRLGPGIPDHPLRLLRIGNQAFLQEFVLPPVQLPQYFTFDLTALKLITQPLPAAT Bundibugyo
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+TTAAIMLASYTITHFGKANNPLVRVNRLGQGIPDHPLRLLRMGNQAFLQEFVLPPVQLPQYFTFDLTALKLVTQPLPAAT Sudan
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+TTAAIMLASYTITHFGKTSNPLVRINRLGPGIPDHPLRLLRIGNQAFLQEFVLPPVQLPQYFTFDLTALKLITQPLPAAT TaiForest
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+TTAAIMLASYTITHFGKATNPLVRVNRLGPGIPDHPLRLLRIGNQAFLQEFVLPPVQLPQYFTFDLTALKLITQPLPAAT Zaire
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+TVAALLTGSYTITQFTHNGQKFVRVNRLGTGIPAHPLRMLREGNQAFIQNMVIPRNFSTNQFTYNLTNLVLSVQKLPDDA Marburg
+
+wtdetpagavnalrpglslhpklrpillpgktgkkghasdltsp--dkiqtimnaipdlkivpidptknivgievpellv Reston_VP40
+::::::::::::::::::::::::::::::::::::::::::::  ::::::::::::::::::::::::::::::::::
+WTDDTPTGPTGILRPGISFHPKLRPILLPGKTGKRGSSSDLTSP--DKIQAIMNFLQDLKLVPIDPAKNIMGIEVPELLV Bundibugyo
+::::::::::::::::::::::::::::::::::::::::::::  ::::::::::::::::::::::::::::::::::
+WTDETPSNLSGALRPGLSFHPKLRPVLLPGKTGKKGHVSDLTAP--DKIQTIVNLMQDFKIVPIDPAKSIIGIEVPELLV Sudan
+::::::::::::::::::::::::::::::::::::::::::::  ::::::::::::::::::::::::::::::::::
+WTDETPAVSTGTLRPGISFHPKLRPILLPGRAGKKGSNSDLTSP--DKIQAIMNFLQDLKIVPIDPTKNIMGIEVPELLV TaiForest
+::::::::::::::::::::::::::::::::::::::::::::  ::::::::::::::::::::::::::::::::::
+WTDDTPTGSNGALRPGISFHPKLRPILLPNKSGKKGNSADLTSP--EKIQAIMTSLQDFKIVPIDPTKNIMGIEVPETLV Zaire
+::::::::::::::::::::::::::::::: :::: :::::::  ::::::::::::::::::::::::::::::::::
+WRPSKDKLIGNTMHPAVSIHPNLPPIVLPTV-KKQA-YRQHKNPNNGPLLAISGILHQLRVEKVPEKTSLFRISLPADMF Marburg
+
+qrltgkkpqpkngqpiipvllpkyvgldpispgdltmvitqdcdschspashpyhmdkqnsyq* Reston_VP40
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::.    . *
+HRLTGKKITTKNGQPIIPILLPKYIGMDPISQGDLTMVITQDCDTCHSPASLPPVSE----K-* Bundibugyo
+::::::::::::::::::::::::::::::::::::::::::::::::::::::: ::   : *
+HKLTGKKMSQKNGQPIIPVLLPKYIGLDPISPGDLTMVITPDYDDCHSPASCSYL-SE---K-* Sudan
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::  :   :.*
+HRLTGKKTTTKNGQPIIPILLPKYIGLDPLSQGDLTMVITQDCDSCHSPASLPPV--N---EK* TaiForest
+:::::::::::::::::::::::::::::::::::::::::::::::::::: ::::    :.*
+HKLTGKKVTSKNGQPIIPVLLPKYIGLDPVAPGDLTMVITQDCDTCHSPASL-PAVI----EK* Zaire
+:::::::::::::::::::::::::::::::::::::::::::::::                *
+SVKEGMMKKRGENSPVVYFQAPENFPLNGFNNRQVVLAYANPTLSAV----------------* Marburg
+

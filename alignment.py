@@ -1,28 +1,13 @@
 ##################################################################################################
 # Module:  alignment.py
-# Version No.: 1.0
+# Version No.: 1.1
 #
 # Programmer: Carol L. Ecale Zhou
 #
-# Most recent update: 11 November 2014
-#
-# Copyright (c) 2015, Lawrence Livermore National Security, LLC. Produced at the Lawrence
-# Livermore National Laboratory. Written by Carol L. Ecale Zhou, zhou4@llnl.gov.
-# CODE LLNL-CODE-667658 All rights reserved.
-# This file is part of CombAlign.
-# Please also read README - Our Notice and GNU General Public License.
-# This program is free software; you can redistribute it and/or modify it under the terms
-# of the GNU General Public License (as published by the Free Software Foundation) version
-# 2, dated June 1991.
-# This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-# without even the IMPLIED WARRANTY OF MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the terms and conditions of the GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License along with this
-# program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-# Boston, MA 02111-1307 USA.
+# Most recent update: 22 June 2015
 #
 # Description: This module contains classes and methods for representing sequence alignment.
-# Classes: alignment
+# Class: alignment
 #
 # This code constructs a multiple sequence alignment allowing for gaps in the reference sequence.
 # Class Alignment is intended to be used as follows:
@@ -33,30 +18,36 @@
 #      The default is to print the multiple alignment horizontally as single strings,
 #      however, you may specify the number of desired positions per line of text.
 #
-# Input file format:  The input file shall contain the reference sequence in fasta format
-#   starting on the 1st line of text. Following that are the pairwise alignments, comprising
-#   on successive lines: the name of the matched sequence, the reference, the correspondence,
-#   and the matching sequence (see comment in method AddAlignment for sample pairwise
-#   alignment), 4 lines per pairwise alignment. The file is ended with a single blank line (CR). 
-#   Omit blank lines in the input file.
-#
 # Programmer's notes:
 #   a) A terminal '*' is added to the end of the reference sequence and to the ends of
 #      the alignment strings, for convenience.
-#   b) Reference sequence is input as a single, continuous string, without spaces or return
-#      characters.  
 #
+# Copyright 2014 by Carol L. Ecale Zhou, Lawrence Livermore National Security.  All Rights Reserved. 
+# Permission to use, copy, modify, and distribute this software and its documentation for educational, 
+# research, and not-for-profit purposes, without fee and without a signed licensing agreement, is 
+# hereby granted, provided that the above copyright notice, this paragraph and the following two 
+# paragraphs appear in all copies, modifications, and distributions. Contact Office of XXXX,
+# Lawrence Livermore National Security (LLNS) for commercial licensing opportunities.
+#    In no event shall LLNS be liable to any party for direct, indirect, special, incidental, or
+# consequential damages, including lost profits, arising out of the use of this software and its
+# documentation, even if LLNS has been advised of the possibility of such damage.
+#    LLNL disclaims any warranties, including, but not limited to, the implied warranties of
+# merchantability and fitness for a particular purpose. The software and accompanying documentation
+# if any, provided hereunder is provided "as is", LLNS has no obligation to provide maintenance,
+# support, updates, enhancements, or modifications.
 ##################################################################################################
 
 import re, copy
 p_comment = re.compile('^#')
 
+TM_ALIGN  = "TM-align"
+DALI_LITE = "DaliLite"
+
 class Alignment(object):
 
-    def __init__(self):
+    def __init__(self,format):
         self.molecule    = "protein"   # default; 'nucleic acid' or 'protein'
         self.structure   = True        # default; sequence-based if False
-        self.method      = "TMalign"   # default; also: LGA or other aligners are possible 
         self.reference   = "unknown"   # name of reference structure|sequence
         self.refHeader   = ">undefined"
         self.refSequence = "empty"
@@ -77,9 +68,20 @@ class Alignment(object):
             "correspondence"  : "",
             "match"           : "",
             }
+        if (format == TM_ALIGN):
+            self.method = TM_ALIGN
+        elif (format == DALI_LITE):
+            self.method = DALI_LITE
+        else:
+            self.method = TM_ALIGN 
 
     def EnterReference(self,refSeq):   # Enters a reference sequence 
-        #print "Entering EnterReference"
+        # Method EnterReference() establishes the data structure for capturing the residue-
+        # by-residue correspondences between each reference residue and its counterpart in
+        # each aligned sequence or structure. Thus, for each position in the reference
+        # sequence, a pairwiseData object is created and assigned to that position,
+        # including the terminal '*'. 
+
         if isinstance(refSeq,dict):
             if "reference" in refSeq:
                 self.reference  = refSeq["reference"]
@@ -95,20 +97,18 @@ class Alignment(object):
                     self.refSequence += '*'  # add terminal '*'
             else:
                 return False
+
             # Construct self.multiAlignment list of pairwiseData objects, one per reference residue
             # Data details are entered in method AddAlignment
-            refLength = len(self.refSequence)
-            #print "refLength is ", refLength
+            refLength = len(self.refSequence) # sequence length plus 1 (including the '*')
             for i in xrange(0,refLength):  
                 nextPairwise = copy.deepcopy(self.pairwiseData)
                 self.multiAlignment.append(nextPairwise)
-            #print "Number of self.multiAlignment pairwiseData objects in list: ", len(self.multiAlignment)
             return True
         else:
             return False
 
     def AddAlignment(self,newAlignment):  # Add a new alignment (stringPair) to self.displayStrings
-        #print "Entering AddAlignment"
         # Fields reference, correspondence, and match are lines of text
         # containing the alignment strings for a pairwise alignment.
         # Example:  MGPKAKAEA--SKPHQIPQIPVKLPFVTAPDAL  # reference
@@ -146,16 +146,17 @@ class Alignment(object):
             else:
                 return 2
 
+            # Input alignment should consiste of 3 strings (reference, correspondence, and
+            # aligned sequence), which are of equal length
             if referenceLen == correspondenceLen and referenceLen == matchLen and matchLen > 0:
                 self.matchNameList.append(matchName)
                 gapString = ""
                 ref_i = 0  # index of positions along reference sequence (no gaps)
                 # i is index of positions along gapped reference from alignment
                 for i in xrange(0,matchLen):
-                    if reference[i] == '-':  # gap was introduced into reference sequence
+                    if reference[i] == '-' or reference[i] == '.':  # gap was introduced into reference sequence
                         gapString += match[i]
                     else:  # next character in reference line is not gap character
-                        #print "i is ", i
                         self.multiAlignment[ref_i]["refChar"] = self.refSequence[ref_i]  #*** redundant: assigns every time
                         self.multiAlignment[ref_i]["matchList"].append(match[i])
                         self.multiAlignment[ref_i]["correspondenceList"].append(correspondence[i])
@@ -169,6 +170,7 @@ class Alignment(object):
                 self.alignmentCount += 1
                 return 0
             else:
+		print "referenceLen is", referenceLen, "correspondenceLen is", correspondenceLen, "matchLen is", matchLen
                 return 3  # error code
         else:
             return 1  # error code
@@ -181,9 +183,6 @@ class Alignment(object):
         return result
 
     def CreateAlignmentStrings(self):
-        #print "Creating formatted alignment strings"
-        #print "alignmentCount is ", self.alignmentCount
-        #print "length of reference sequence is ", len(self.refSequence)
         for i in xrange(0,len(self.refSequence)): # Add next chars to display strings; iterate through multiAlignment data structure
             for j in xrange(0,self.alignmentCount): # Append gapList at prev refSeq pos to j's current loopString
                 self.loopStrings[j] += self.multiAlignment[i-1]["gapList"][j] # recall: gap is associated w/prev pos
@@ -219,17 +218,17 @@ class Alignment(object):
             position += 1
 
     def PrintDisplayStrings2file(self, OUTFILE, width=0):  # default is to print all sequence lines as single string
+        width = int(width) # cast to integer
 
         if width == 0:  # Simple case:  print as is
-            #print self.refDisplayString, " ", self.refHeader
             OUTFILE.write("%s%s%s\n" % (self.refDisplayString, " ", self.refHeader))
             for stringPair in self.displayStrings:
-                #print stringPair["correspondence"]
-                #print stringPair["match"]
                 OUTFILE.write("%s\n" % (stringPair["correspondence"]))
                 OUTFILE.write("%s\n" % (stringPair["match"]))
                 
         else: # Split each reference and correspondence/match
+            # We need to determine how many chunks to split the alignment data
+            # into, depending on how long each chunk should be. 
             list_i = 0 # need this to access match names in self.matchNameList
             segmentSets = []  # list of stringPair segments
             segmentSetDict = {
@@ -251,22 +250,20 @@ class Alignment(object):
             #    D1
             #    A2
             #    B2  etc.
-            #print "Length of gapped reference: ", len(self.refDisplayString)
+            OUTFILE.write("%s%s\n" % ("Input format was ", self.method))
             OUTFILE.write("%s%s\n" % ("Length of gapped reference: ", len(self.refDisplayString))) 
             if len(self.refDisplayString)%width == 0:
                 segmentCount = len(self.refDisplayString)/width
             else:
                 segmentCount = len(self.refDisplayString)/width + 1
-            #print "Segment size is", width
-            #print "There will be this many segments: ", segmentCount
-            OUTFILE.write("%s%s\n" % ("Segment size is ", width))
             OUTFILE.write("%s%s\n" % ("There will be this many segments: ", segmentCount))
-            OUTFILE.write("%s%s\n" % ("The reference structure was:  ",self.refHeader[1:]))
+            OUTFILE.write("%s%s\n" % ("The reference structure was:  ",self.reference))
+            OUTFILE.write("%s%s\n" % ("The reference fasta was:  ",self.refHeader[1:]))
             OUTFILE.write("%s\n" % ("The compared structures were:"))
             for name in self.matchNameList:
                 OUTFILE.write("%s%s\n" % ("  ",name))
 
-            # Perform splits
+            # Perform splits: split data into designated chunks
             last = False
             for stringPair in self.displayStrings:  # iterate through alignment strings
                 for i in xrange(0,segmentCount):  # len is same for all strings; split segmentCount times
@@ -275,8 +272,6 @@ class Alignment(object):
                         refSegment   = self.refDisplayString       [i*width:]
                         correSegment = stringPair["correspondence"][i*width:]
                         matchSegment = stringPair["match"]         [i*width:]
-                        #print "refSegment is", refSegment                               
-                        #print "matchSegment is", matchSegment                          
                         segmentSet["correspondence"] = correSegment
                         segmentSet["match"]          = matchSegment
                         segmentSet["reference"]      = refSegment
@@ -291,10 +286,8 @@ class Alignment(object):
                         segmentSet["matchName"]      = self.matchNameList[list_i] # need to re-insert name due to line split
                     segmentSets.append(segmentSet)
                 list_i += 1
-            #print "There are this many segment sets: ", len(segmentSets)
             OUTFILE.write("%s%s\n" % ("There are this many segment sets: ", len(segmentSets)))
 
-            # Print segments, grouping appropriately
             refHeader = self.refHeader[1:]  # trim '>' from header
 
             for i in xrange(0,segmentCount):
@@ -302,14 +295,10 @@ class Alignment(object):
                 for j in xrange(0,self.alignmentCount):
                     k = (j * segmentCount) + i
                     if first:
-                        #print segmentSets[k]["reference"], " ", refHeader
                         OUTFILE.write("%s%s%s\n" % (segmentSets[k]["reference"]," ",refHeader)) 
                         first = False
-                    #print segmentSets[k]["correspondence"]
-                    #print segmentSets[k]["match"], " ", segmentSets[k]["matchName"]
                     OUTFILE.write("%s\n"     % (segmentSets[k]["correspondence"]))
                     OUTFILE.write("%s%s%s\n" % (segmentSets[k]["match"]," ", segmentSets[k]["matchName"]))
-                #print ""
                 OUTFILE.write("%s\n" % (""))
 
     def PrintAll(self):
