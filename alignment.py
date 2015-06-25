@@ -1,4 +1,4 @@
-##################################################################################################
+#################################################################################################
 # Module:  alignment.py
 # Version No.: 1.1
 #
@@ -40,8 +40,11 @@
 import re, copy
 p_comment = re.compile('^#')
 
-TM_ALIGN  = "TM-align"
-DALI_LITE = "DaliLite"
+TM_ALIGN           = "TM-align"
+DALI_LITE          = "DaliLite"
+STANDARD           = "combAlign"
+ALIGNED_FASTA      = "aligned_fasta" # format according to www.bioperl.org/wiki/FASTA_multiple_alignment_format
+ACCEPTABLE_OUTPUT_FORMATS = (STANDARD,ALIGNED_FASTA)
 
 class Alignment(object):
 
@@ -59,7 +62,7 @@ class Alignment(object):
             "refChar"            : "", # Residue in the reference sequence at current position (should mimic self.refSequence)
             "correspondenceList" : [], # list of values for R's that correspond ('.', ':', or ' ')
             "matchList"          : [], # list of R's that correspond to position on reference
-            "gapList"            : [], # list of strings, each comrpising a loop in match, gap in reference
+            "gapList"            : [], # list of strings, each comprising a loop in match, gap in reference
             }
         self.loopStrings    = []       # list of strings in match sequences that extend gaps in reference
         self.refDisplayString = ""     # holds final (gapped) reference sequence
@@ -74,6 +77,7 @@ class Alignment(object):
             self.method = DALI_LITE
         else:
             self.method = TM_ALIGN 
+        self.outputFormat = STANDARD 
 
     def EnterReference(self,refSeq):   # Enters a reference sequence 
         # Method EnterReference() establishes the data structure for capturing the residue-
@@ -217,9 +221,75 @@ class Alignment(object):
             print pairwise["gapList"]
             position += 1
 
+    def SetOutputFormat(self, format):  # Determines execution of PrintDisplayStrings2file()
+        if format in ACCEPTABLE_OUTPUT_FORMATS:
+            self.outputFormat = format
+        else:
+            print "WARNING: unacceptable output format in alignment.py"
+            return 4 
+
     def PrintDisplayStrings2file(self, OUTFILE, width=0):  # default is to print all sequence lines as single string
         width = int(width) # cast to integer
+       
+        # Print summary information 
+        OUTFILE.write("%s%s\n" % ("Input format was ", self.method))
+        OUTFILE.write("%s%s\n" % ("Output format is ", self.outputFormat))
+        OUTFILE.write("%s%s\n" % ("Length of gapped reference: ", len(self.refDisplayString))) 
 
+        # Determine how many segments to print 
+        if width == 0:
+            segmentCount = 1
+        elif len(self.refDisplayString)%width == 0:
+            segmentCount = len(self.refDisplayString)/width
+        else:
+            segmentCount = len(self.refDisplayString)/width + 1
+
+        OUTFILE.write("%s%s\n" % ("There will be this many segments: ", segmentCount))
+        OUTFILE.write("%s%s\n" % ("The reference structure was:  ",self.reference))
+        OUTFILE.write("%s%s\n" % ("The reference fasta was:  ",self.refHeader[1:]))
+        OUTFILE.write("%s\n" % ("The compared structures were:"))
+        for name in self.matchNameList:
+            OUTFILE.write("%s%s\n" % ("  ",name))
+
+        # Print in ALIGNED_FASTA format
+        if self.outputFormat == ALIGNED_FASTA:
+            if width == 0:  # Simple case, print each sequence as single line
+                OUTFILE.write("%s\n" % (self.refHeader))
+                OUTFILE.write("%s\n" % (self.refDisplayString))
+                for i in xrange(0,len(self.matchNameList)):
+                    OUTFILE.write("%s%s\n" % (">", self.matchNameList[i]))
+                    pairwise = self.displayStrings[i]
+                    OUTFILE.write("%s\n" % (pairwise["match"]))
+                        
+            else:  # Split each sequence into fragments of size 'width'
+
+                # First, print the reference gapped sequence
+                OUTFILE.write("%s\n" % (self.refHeader))
+                for i in xrange(0,segmentCount-1):
+                    offset = i * width
+                    start = offset
+                    end   = offset + width
+                    OUTFILE.write("%s\n" % (self.refDisplayString[start:end])) 
+                if end < len(self.refDisplayString):
+                    OUTFILE.write("%s\n" % (self.refDisplayString[end:]))
+
+                # Next, for each aligned protein, print its gapped sequence
+                j = 0
+                for stringPair in self.displayStrings:
+                    # Print the current header
+                    OUTFILE.write("%s%s\n" % (">", self.matchNameList[j]))  # aligned protein's header
+                    j += 1
+                    for i in xrange(0,segmentCount-1):
+                        # Calculate offset and start,end for current segment, then print
+                        offset = i * width
+                        start = offset
+                        end   = offset + width
+                        OUTFILE.write("%s\n" % (stringPair["match"][start:end]))
+                    if end < len(stringPair["match"]):
+                        OUTFILE.write("%s\n" % (stringPair["match"][end:]))
+            return
+
+        # Print in default output format...
         if width == 0:  # Simple case:  print as is
             OUTFILE.write("%s%s%s\n" % (self.refDisplayString, " ", self.refHeader))
             for stringPair in self.displayStrings:
@@ -237,7 +307,7 @@ class Alignment(object):
                 "match"          : "",
                 "matchName"      : "",
                 }
-            segmentCount = 0
+            # Perform splits: split data into designated chunks
             # Split reference, correspondence, and match strings
             # Assuming you have pairwise alignments A, B, C, and D,
             # comprising alignment chunks A1, A2, A3, etc.,
@@ -250,20 +320,6 @@ class Alignment(object):
             #    D1
             #    A2
             #    B2  etc.
-            OUTFILE.write("%s%s\n" % ("Input format was ", self.method))
-            OUTFILE.write("%s%s\n" % ("Length of gapped reference: ", len(self.refDisplayString))) 
-            if len(self.refDisplayString)%width == 0:
-                segmentCount = len(self.refDisplayString)/width
-            else:
-                segmentCount = len(self.refDisplayString)/width + 1
-            OUTFILE.write("%s%s\n" % ("There will be this many segments: ", segmentCount))
-            OUTFILE.write("%s%s\n" % ("The reference structure was:  ",self.reference))
-            OUTFILE.write("%s%s\n" % ("The reference fasta was:  ",self.refHeader[1:]))
-            OUTFILE.write("%s\n" % ("The compared structures were:"))
-            for name in self.matchNameList:
-                OUTFILE.write("%s%s\n" % ("  ",name))
-
-            # Perform splits: split data into designated chunks
             last = False
             for stringPair in self.displayStrings:  # iterate through alignment strings
                 for i in xrange(0,segmentCount):  # len is same for all strings; split segmentCount times
